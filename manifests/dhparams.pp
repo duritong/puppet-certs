@@ -5,11 +5,8 @@ define certs::dhparams(){
     command => "openssl dhparam -out ${name} ${certs::ssl_config::dh_parameters_length}",
     creates => $name,
     timeout => '-1'
-  }
-
-  file{$name:
+  } -> file{$name:
     ensure  => present,
-    require => Exec['generate_dh_params'],
     owner   => root,
     group   => 0,
     mode    => '0644';
