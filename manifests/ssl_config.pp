@@ -1,0 +1,17 @@
+# manage global ssl options
+class certs::ssl_config(
+  # https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_Ciphersuite
+  # modifications:
+  # * prefer AES256 over AES128
+  # * prefer discrete log over EC
+  # * discourage RC4 even if it means no pfs
+  # * for tls1.0 we have to favor ecdhe over dhe, since legacy nss does not
+  #   support dhparams > 2048 bit
+  $base_ciphers         = "DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES256-GCM-SHA384:DHE-DSS-AES128-GCM-SHA256:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-DSS-AES256-SHA256:DHE-DSS-AES128-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:kEDH+AESGCM:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-DSS-AES256-SHA:DHE-DSS-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA:HIGH:!aNULL:!eNULL",
+  $ecdh_curve           = 'secp384r1',
+  $dh_parameters_length = 4096,
+
+) {
+  $ciphers = "${base_ciphers}:!SSLv2:!EXPORT:!DES:!3DES:!MD5:!PSK"
+  $opportunistic_ciphers = "${base_ciphers}:MEDIUM:@STRENGTH"
+}
