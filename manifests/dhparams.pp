@@ -14,4 +14,9 @@ define certs::dhparams(){
     group   => 0,
     mode    => '0644';
   }
+  if str2bool($::selinux) {
+    File[$name]{
+      seltype => 'cert_t',
+    }
+  }
 }
