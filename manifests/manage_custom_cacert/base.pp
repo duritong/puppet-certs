@@ -3,8 +3,8 @@ class certs::manage_custom_cacert::base(
   $purge = true,
 ) {
   if $::osfamily == 'Debian' {
-    $command = 'dpkg-reconfigure ca-certificates'
-    $ca_dir = '/usr/share/ca-certificates/extra'
+    $command = 'update-ca-certificates'
+    $ca_dir = '/usr/local/share/ca-certificates'
   } elsif $::osfamily == 'RedHat' {
     $command = 'update-ca-trust extract'
     $ca_dir = '/etc/pki/ca-trust/source/anchors'
