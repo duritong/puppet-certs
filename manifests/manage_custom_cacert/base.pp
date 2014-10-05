@@ -1,5 +1,5 @@
 # basic stuff to manage custom ca's
-class certificates::manage_custom_cacert::base(
+class certs::manage_custom_cacert::base(
   $purge = true,
 ) {
   if $::osfamily == 'Debian' {
@@ -19,7 +19,7 @@ class certificates::manage_custom_cacert::base(
     mode    => '0644';
   }
   if $purge {
-    File[$directory]{
+    File[$ca_dir]{
       purge   => true,
       force   => true,
       recurse => true,
@@ -28,7 +28,7 @@ class certificates::manage_custom_cacert::base(
   }
 
   exec{'update_custom_cas':
-    command     => $command
+    command     => $command,
     refreshonly => true,
   }
 }

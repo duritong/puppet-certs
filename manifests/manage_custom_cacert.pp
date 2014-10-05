@@ -1,5 +1,5 @@
 # manage an extra CA certificate within your system ca bundle
-define certificates::manage_custom_cacert(
+define certs::manage_custom_cacert(
   $ensure  = present,
   $content = undef,
   $source  = undef,
@@ -29,7 +29,7 @@ define certificates::manage_custom_cacert(
     }
   } else {
     include certificates::manage_custom_cacert::base
-    $file = "${certificates::manage_custom_cacert::base::ca_dir}/${name}.crt"
+    $file = "${certs::manage_custom_cacert::base::ca_dir}/${name}.crt"
     file{$file:
       notify => Exec['update_custom_cas'],
     }
