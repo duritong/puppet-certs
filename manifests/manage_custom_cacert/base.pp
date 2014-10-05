@@ -8,6 +8,12 @@ class certs::manage_custom_cacert::base(
   } elsif $::osfamily == 'RedHat' {
     $command = 'update-ca-trust extract'
     $ca_dir = '/etc/pki/ca-trust/source/anchors'
+    if $::operatingsystemmajrelease == 6 {
+      exec{'update-ca-trust enable':
+        onlyif => 'update-ca-trust check | grep -q DISABLED',
+        notify => Exec['update_custom_cas'],
+      }
+    }
   } else {
     fail("Your osfamily ${::osfamily} is not (yet) supported!")
   }

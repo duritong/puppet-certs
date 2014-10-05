@@ -2,7 +2,7 @@
 class certs::manage_custom_cacert::legacy_rhel {
   $dir = '/var/lib/puppet/manage_CAs'
   file{$dir:
-    ensure  => present,
+    ensure  => directory,
     owner   => root,
     group   => 0,
     mode    => '0644',
