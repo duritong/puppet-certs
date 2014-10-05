@@ -28,7 +28,7 @@ define certs::manage_custom_cacert(
       }
     }
   } else {
-    include certificates::manage_custom_cacert::base
+    include certs::manage_custom_cacert::base
     $file = "${certs::manage_custom_cacert::base::ca_dir}/${name}.crt"
     file{$file:
       notify => Exec['update_custom_cas'],
