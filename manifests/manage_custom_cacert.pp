@@ -16,6 +16,7 @@ define certs::manage_custom_cacert(
         path   => '/etc/pki/tls/certs/ca-bundle.crt',
     }
     if $source {
+      include certs::manage_custom_cacert::legacy_rhel
       file{"${certs::manage_custom_cacert::legacy_rhel::dir}/${name}":
         source => $source,
       }
