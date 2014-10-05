@@ -5,9 +5,13 @@ class certs::manage_custom_cacert::base(
   if $::osfamily == 'Debian' {
     $command = 'update-ca-certificates'
     $ca_dir = '/usr/local/share/ca-certificates'
+    $dir_group = staff
+    $dir_mode = '2775'
   } elsif $::osfamily == 'RedHat' {
     $command = 'update-ca-trust extract'
     $ca_dir = '/etc/pki/ca-trust/source/anchors'
+    $dir_group = root
+    $dir_mode = '0755'
     if $::operatingsystemmajrelease == 6 {
       exec{'update-ca-trust enable':
         onlyif => 'update-ca-trust check | grep -q DISABLED',
@@ -21,8 +25,8 @@ class certs::manage_custom_cacert::base(
   file{$ca_dir:
     ensure  => directory,
     owner   => root,
-    group   => 0,
-    mode    => '0644';
+    group   => $dir_group,
+    mode    => $dir_mode;
   }
   if $purge {
     File[$ca_dir]{
