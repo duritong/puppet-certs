@@ -23,7 +23,7 @@ class certs::ssl_config(
   $legacy_aes    = "AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA"
   $legacy_rc4    = "ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA"
   $excludes      = "!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS"
-  $exclude_proto = "!SSLv2:!SSLv3"
+  $exclude_proto = "!SSLv2"
 
   if ($base_cipher_override != absent) {
     $base_ciphers = $base_cipher_override
