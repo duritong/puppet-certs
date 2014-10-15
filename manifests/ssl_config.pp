@@ -25,7 +25,7 @@ class certs::ssl_config(
   $excludes      = "!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS"
   $exclude_proto = "!SSLv2:!SSLv3"
 
-  if ($base_cipher_override) {
+  if ($base_cipher_override != absent) {
     $base_ciphers = $base_cipher_override
   } else {
     $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${other_pfs}:${tls10_pfs_ec}:${tls10_pfs_log}:${legacy_aes}:${legacy_rc4}"
