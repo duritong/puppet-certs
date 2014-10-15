@@ -6,7 +6,7 @@ class certs::ssl_config(
   # * prefer authenticated encryption over CBC
   # * prefer discrete log over elliptic curves. EXCEPT for tls1.0 ciphers
   #   since legacy nss does not support dhparams > 2048 bit
-  # * RC4 bias is considered worse than no pfs
+  # * remove RC4
   $base_cipher_override = absent,
   $ecdh_curve           = 'secp384r1',
   $dh_parameters_length = 4096,
@@ -21,14 +21,13 @@ class certs::ssl_config(
   $tls10_pfs_log = "DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-DSS-AES256-SHA:DHE-DSS-AES128-SHA"
   $other_pfs     = "kEDH+AES"
   $legacy_aes    = "AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA"
-  $legacy_rc4    = "ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA"
   $excludes      = "!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS"
   $exclude_proto = "!SSLv2"
 
   if ($base_cipher_override != absent) {
     $base_ciphers = $base_cipher_override
   } else {
-    $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${tls10_pfs_ec}:${tls10_pfs_log}:${other_pfs}:${legacy_aes}:${legacy_rc4}"
+    $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${tls10_pfs_ec}:${tls10_pfs_log}:${other_pfs}:${legacy_aes}"
   }
 
   $ciphers               = "${base_ciphers}:${excludes}:${exclude_proto}"
