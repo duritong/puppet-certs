@@ -17,9 +17,9 @@ class certs::ssl_config(
   $other_pfs_ae  = "kEDH+AESGCM"
   $pfs_log       = "DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-DSS-AES256-SHA256:DHE-DSS-AES128-SHA256"
   $pfs_ec        = "ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256"
-  $other_pfs     = "kEDH+AES"
   $tls10_pfs_ec  = "ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA"
   $tls10_pfs_log = "DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DHE-DSS-AES256-SHA:DHE-DSS-AES128-SHA"
+  $other_pfs     = "kEDH+AES"
   $legacy_aes    = "AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA"
   $legacy_rc4    = "ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:RC4-SHA"
   $excludes      = "!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS"
@@ -28,7 +28,7 @@ class certs::ssl_config(
   if ($base_cipher_override != absent) {
     $base_ciphers = $base_cipher_override
   } else {
-    $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${other_pfs}:${tls10_pfs_ec}:${tls10_pfs_log}:${legacy_aes}:${legacy_rc4}"
+    $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${tls10_pfs_ec}:${tls10_pfs_log}:${other_pfs}:${legacy_aes}:${legacy_rc4}"
   }
 
   $ciphers               = "${base_ciphers}:${excludes}:${exclude_proto}"
