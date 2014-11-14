@@ -26,11 +26,14 @@ class certs::ssl_config(
   $exclude_proto = "!SSLv2"
 
   if ($base_cipher_override != absent) {
-    $base_ciphers = $base_cipher_override
+    $base_ciphers        = $base_cipher_override
+    $base_ciphers_no_rc4 = absent
   } else {
-    $base_ciphers = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${tls10_pfs_ec}:${tls10_pfs_log}:${other_pfs}:${legacy_aes}:${legacy_rc4}"
+    $base_ciphers_no_rc4 = "${pfs_ae_log}:${pfs_ae_ec}:${other_pfs_ae}:${pfs_log}:${pfs_ec}:${tls10_pfs_ec}:${tls10_pfs_log}:${other_pfs}:${legacy_aes}"
+    $base_ciphers        = "${base_ciphers_no_rc4}:${legacy_rc4}"
   }
 
+  $ciphers_no_rc4        = "${base_ciphers_no_rc4}:${excludes}:${exclude_proto}"
   $ciphers               = "${base_ciphers}:${excludes}:${exclude_proto}"
 
   # Opportunistic cipher selection e.g. for smtp s2s communication, where we soft-fail anyways
