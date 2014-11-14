@@ -33,6 +33,7 @@ class certs::ssl_config(
     $base_ciphers        = "${base_ciphers_no_rc4}:${legacy_rc4}"
   }
 
+  $ciphers_tls12         = "${pfs_ae_log}:${pfs_ae_ec}:${excludes}:${exclude_proto}:!SSLv3"
   $ciphers_no_rc4        = "${base_ciphers_no_rc4}:${excludes}:${exclude_proto}"
   $ciphers               = "${base_ciphers}:${excludes}:${exclude_proto}"
 
