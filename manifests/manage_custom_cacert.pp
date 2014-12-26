@@ -19,6 +19,9 @@ define certs::manage_custom_cacert(
       include certs::manage_custom_cacert::legacy_rhel
       file{"${certs::manage_custom_cacert::legacy_rhel::dir}/${name}":
         source => $source,
+        owner  => root,
+        group  => 0,
+        mode   => '0644',
       }
       File_content["ca_cert_${name}"]{
         source => "${certs::manage_custom_cacert::legacy_rhel::dir}/${name}"
