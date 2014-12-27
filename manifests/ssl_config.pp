@@ -34,5 +34,5 @@ class certs::ssl_config(
   $ciphers               = "${base_ciphers}:${excludes}:${exclude_proto}"
 
   # Opportunistic cipher selection e.g. for smtp s2s communication, where we soft-fail anyways
-  $opportunistic_ciphers = "${base_ciphers}:@STRENGTH:!SSLv2"
+  $opportunistic_ciphers = "ALL:!aNULL:!eNULL:@STRENGTH"
 }
