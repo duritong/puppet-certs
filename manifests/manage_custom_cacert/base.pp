@@ -12,7 +12,7 @@ class certs::manage_custom_cacert::base(
     $ca_dir = '/etc/pki/ca-trust/source/anchors'
     $dir_group = root
     $dir_mode = '0755'
-    if $::operatingsystemmajrelease == 6 {
+    if versioncmp($::operatingsystemmajrelease,'7') < 0 {
       exec{'update-ca-trust enable':
         onlyif => 'update-ca-trust check | grep -q DISABLED',
         notify => Exec['update_custom_cas'],

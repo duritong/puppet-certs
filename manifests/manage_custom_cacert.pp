@@ -9,7 +9,7 @@ define certs::manage_custom_cacert(
     fail("We either need a source or a content for ${name}")
   }
 
-  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease < 6 {
+  if $::osfamily == 'RedHat' and versioncmp($::operatingsystemmajrelease,'6') < 0 {
     file_content{
       "ca_cert_${name}":
         ensure => $ensure,
